@@ -12,18 +12,24 @@
         <body>
             <div class="container">
                 <h1>Produtos</h1>
-                <tables>
+                <a href="/produto/insert" class="btn btn-primary">Novo Produto</a>
+                <table class="table >
                     <tr>
                         <th>ID</th>
                         <th>Titulo</th>
+                        <th>&nbsp;</th>
                     </tr>
-                    <c:forEach var="item" itens="${produtos}">
+                    <c:forEach var="item" items="${produtos}">
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.titulo}</td>
+                            <td>
+                                <a href="/produto/update?id=${item.id}" class="bnt bnt-warning">Editar</a>
+                                <a href="/produto/delete?id=${item.id}" class="bnt bnt-danger">Excluir</a>
+                            </td>
                         </tr>
                     </c:forEach>
-                </tables>
+                </table>
             </div>
         </body>
 
