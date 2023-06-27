@@ -45,10 +45,46 @@ public class ProdutoController {
         Optional<Produto> produto= produtoRepo.findById(id);
 
         if(produto.isPresent()) {
-            model.addAttribute("produto, produto");
-            return "/produto/list";
+            model.addAttribute("produto", produto.get());
+            return "/produto/update";
         }
 
         return "redirect:/produto/list";
     }
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(
+        @RequestParam("id") int id,
+        @RequestParam("titulo") String titulo,
+        @RequestParam("descricao") String descricao) {
+    
+        Optional<Produto> produto= produtoRepo.findById(id);
+
+        if(produto.isPresent()) {
+            produto.get().setTitulo(titulo);       
+            produto.get().setDescricao(descricao);
+
+            produtoRepo.save(produto.get());
+        }
+        return "redirect:/produto/list";
+    }
+
+    @RequestMapping("/delete")
+    public String delete(Model model, @RequestParam("id") int id) {
+        Optional<Produto> produto= produtoRepo.findById(id);
+
+        if(produto.isPresent()) {
+            model.addAttribute("produto", produto.get());
+            return "/produto/delete";
+        }
+
+        return "redirect:/produto/list";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(@RequestParam("id") int id ) {
+        produtoRepo.deleteById(id);
+
+        return "redirect:/produto/list";
+    }
 }
+
